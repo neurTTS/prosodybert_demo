@@ -28,7 +28,12 @@
 <center> <sup>1</sup> Berkeley EECS, CA </center>
 <center> <sup>2</sup> Tencent AI Lab, Bellevue, WA</center> -->
 <h2 id="abstract">Abstract</h2>
-<p>This work proposes ProsodyBERT, a self-supervised approach to learning prosody representations from raw audio via HuBERT-like masked unit prediction. Experiments show that the TTS model trained with ProsodyBERT features can generate natural and expressive speech, outperforming the model trained with energy and pitch. Also, the style and expressiveness of synthesized audio can be controlled by manipulating the prosody features.</p>
+<p>This work proposes ProsodyBERT, a self-supervised approach to learning prosody representations from raw audio via HuBERT-like masked unit prediction. 
+  The key contribution of this work is in the development of a new, low-dimensional
+  representation of prosody that can be learned from untranscribed speech. We demonstrate good
+  speaker de-identification results and utility of the new features in both speech synthesis and emotion
+  recognition.
+</p>
 <h2><p class="toc_title">Contents</p></h2>
 <div id="toc_container">
 <ul>
@@ -61,6 +66,19 @@
   </thead>
   <tbody>
     </tr>
+    <tr>
+      <td colspan="5" class="table_notes">
+        <i>"Where do you want to go?" (female) (Figure 4 of the paper)</i>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><audio src="fig4/baseline.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="fig4/phone.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="fig4/word.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="fig4/fastspeech2.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="fig4/groundtruth.wav" controls="" preload=""></audio></td>
+    </tr>
+
     <tr>
       <td colspan="5" class="table_notes">
         <i>"You don't look too well. What's going on?" (female)</i>
