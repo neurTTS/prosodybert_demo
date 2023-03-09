@@ -5,7 +5,7 @@
 <!-- Begin Jekyll SEO tag v2.7.1 -->
 <title>ProsodyBERT: Self-Supervised Prosody Representation for Controllable-TTS</title>
 <meta name="generator" content="Jekyll v3.9.0">
-<meta property="og:title" content="ProsodyBERT: Self-Supervised Prosody Representation for Expressive TTS">
+<meta property="og:title" content="ProsodyBERT: Self-Supervised Prosody Representation for Controllable-TTS">
 <meta property="og:locale" content="en_US">
 <link rel="canonical" href="https://syang1993.github.io/glow_wavegan/">
 <meta property="og:url" content="https://syang1993.github.io/glow_wavegan/">
@@ -23,19 +23,16 @@
       
     </section>
     <section class="main-content">
-      <h1 id=""><center> ProsodyBERT: Self-Supervised Prosody Representation for Expressive </center></h1>
+      <h1 id=""><center> ProsodyBERT: Self-Supervised Prosody Representation for Controllable-TTS </center></h1>
 <!-- <center> Jiachen Lian<sup>1</sup><sup>2</sup>, Chunlei Zhang<sup>2</sup>, Dong Yu<sup>2</sup> </center>
 <center> <sup>1</sup> Berkeley EECS, CA </center>
 <center> <sup>2</sup> Tencent AI Lab, Bellevue, WA</center> -->
 <h2 id="abstract">Abstract</h2>
-<p>We propose ProsodyBERT, a self-supervised approach to learning prosody representations from raw audio. Different from
-most previous work, which uses information bottlenecks to disentangle prosody features from lexical content and speaker
-information, we perform an offline clustering of speaker-normalized prosody-related features (energy, pitch, etc.) and
-use the cluster labels as targets for HuBERT-like masked unit prediction. A span boundary loss is also used to capture
-long-range prosodic information. We demonstrate the effectiveness of ProsodyBERT on a multi-speaker style-controllable
-text-to-speech (TTS) system, showing that the TTS system trained with ProsodyBERT features generates natural and
-expressive speech samples, surpassing Fastspeech 2 (which directly models pitch and energy) in subjective human
-evaluation.
+<p>This work proposes ProsodyBERT, a self-supervised approach to learning prosody representations from raw audio via HuBERT-like masked unit prediction. 
+  The key contribution of this work is in the development of a new, low-dimensional
+  representation of prosody that can be learned from untranscribed speech. We demonstrate good
+  speaker de-identification results and utility of the new features in both speech synthesis and emotion
+  recognition.
 </p>
 <h2><p class="toc_title">Contents</p></h2>
 <div id="toc_container">
@@ -60,9 +57,10 @@ evaluation.
 <table>
   <thead>
     <tr>
-      <th style="text-align: center"><strong>FastSpeech2</strong></th>
       <th style="text-align: center"><strong>Baseline UTTS</strong></th>
-      <th style="text-align: center"><strong>UTTS + ProsodyBERT</strong></th>
+      <th style="text-align: center"><strong>UTTS + Phone Prosody</strong></th>
+      <th style="text-align: center"><strong>UTTS + Word Prosody</strong></th>
+      <th style="text-align: center"><strong>FastSpeech2</strong></th>
       <th style="text-align: center"><strong>Ground Truth</strong></th>
     </tr>
   </thead>
@@ -74,9 +72,10 @@ evaluation.
       </td>
     </tr>
     <tr>
-      <td style="text-align: left"><audio src="fig4/fastspeech2.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="fig4/baseline.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="fig4/phone.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="fig4/word.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="fig4/fastspeech2.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="fig4/groundtruth.wav" controls="" preload=""></audio></td>
     </tr>
 
@@ -86,9 +85,10 @@ evaluation.
       </td>
     </tr>
     <tr>
-      <td style="text-align: left"><audio src="wavs/fastspeech2/0_1_d1738.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="wavs/baseline/0_1_d1738.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="wavs/phone/0_1_d1738.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="wavs/word/0_1_d1738.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="wavs/fastspeech2/0_1_d1738.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="wavs/groundtruth/0_1_d1738.wav" controls="" preload=""></audio></td>
     </tr>
         <tr>
@@ -97,9 +97,10 @@ evaluation.
           </td>
         </tr>
     <tr>
-      <td style="text-align: left"><audio src="wavs/fastspeech2/5_1_d1903.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="wavs/baseline/5_1_d1903.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="wavs/phone/5_1_d1903.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="wavs/word/5_1_d1903.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="wavs/fastspeech2/5_1_d1903.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="wavs/groundtruth/5_1_d1903.wav" controls="" preload=""></audio></td>
     </tr>
     <tr>
@@ -108,9 +109,10 @@ evaluation.
       </td>
     </tr>
     <tr>
-      <td style="text-align: left"><audio src="wavs/fastspeech2/5_1_d1929.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="wavs/baseline/5_1_d1929.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="wavs/phone/5_1_d1929.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="wavs/word/5_1_d1929.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="wavs/fastspeech2/5_1_d1929.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="wavs/groundtruth/5_1_d1929.wav" controls="" preload=""></audio></td>
     </tr>
     <tr>
@@ -119,9 +121,10 @@ evaluation.
       </td>
     </tr>
     <tr>
-      <td style="text-align: left"><audio src="wavs/fastspeech2/3_0_d1649.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="wavs/baseline/3_0_d1649.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="wavs/phone/3_0_d1649.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="wavs/word/3_0_d1649.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="wavs/fastspeech2/3_0_d1649.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="wavs/groundtruth/3_0_d1649.wav" controls="" preload=""></audio></td>
     </tr>
     <tr>
@@ -130,9 +133,10 @@ evaluation.
       </td>
     </tr>
     <tr>
-      <td style="text-align: left"><audio src="wavs/fastspeech2/3_0_d1616.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="wavs/baseline/3_0_d1616.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="wavs/phone/3_0_d1616.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="wavs/word/3_0_d1616.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="wavs/fastspeech2/3_0_d1616.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="wavs/groundtruth/3_0_d1616.wav" controls="" preload=""></audio></td>
     </tr>
         <tr>
@@ -141,9 +145,10 @@ evaluation.
           </td>
         </tr>
         <tr>
-          <td style="text-align: left"><audio src="wavs/fastspeech2/9_0_d1748.wav" controls="" preload=""></audio></td>
           <td style="text-align: left"><audio src="wavs/baseline/9_0_d1748.wav" controls="" preload=""></audio></td>
+          <td style="text-align: left"><audio src="wavs/phone/9_0_d1748.wav" controls="" preload=""></audio></td>
           <td style="text-align: left"><audio src="wavs/word/9_0_d1748.wav" controls="" preload=""></audio></td>
+          <td style="text-align: left"><audio src="wavs/fastspeech2/9_0_d1748.wav" controls="" preload=""></audio></td>
           <td style="text-align: left"><audio src="wavs/groundtruth/9_0_d1748.wav" controls="" preload=""></audio></td>
         </tr>
 
@@ -175,9 +180,10 @@ evaluation.
 <table>
   <thead>
     <tr>
-      <th style="text-align: center"><strong>FastSpeech2</strong></th>
       <th style="text-align: center"><strong>Baseline UTTS</strong></th>
-      <th style="text-align: center"><strong>UTTS + ProsodyBERT</strong></th>
+      <th style="text-align: center"><strong>UTTS + Phone Prosody</strong></th>
+      <th style="text-align: center"><strong>UTTS + Word Prosody</strong></th>
+      <th style="text-align: center"><strong>FastSpeech2</strong></th>
     </tr>
   </thead>
   <tbody>
@@ -189,9 +195,10 @@ evaluation.
       </td>
     </tr>
     <tr>
-      <td style="text-align: left"><audio src="unseen_text/5_man_fastspeech2.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="unseen_text/5_man_baseline.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="unseen_text/5_man_phone.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="unseen_text/5_man_word.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="unseen_text/5_man_fastspeech2.wav" controls="" preload=""></audio></td>
     </tr>
     
     <tr>
@@ -200,9 +207,10 @@ evaluation.
       </td>
     </tr>
     <tr>
-      <td style="text-align: left"><audio src="unseen_text/5_woman_fastspeech2.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="unseen_text/5_woman_baseline.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="unseen_text/5_woman_phone.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="unseen_text/5_woman_word.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="unseen_text/5_woman_fastspeech2.wav" controls="" preload=""></audio></td>
     </tr>
 
     <tr>
@@ -211,9 +219,10 @@ evaluation.
       </td>
     </tr>
     <tr>
-      <td style="text-align: left"><audio src="unseen_text/1_man_fastspeech2.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="unseen_text/1_man_baseline.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="unseen_text/1_man_phone.wav" controls="" preload=""></audio></td>
       <td style="text-align: left"><audio src="unseen_text/1_man_word.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="unseen_text/1_man_fastspeech2.wav" controls="" preload=""></audio></td>
     </tr>
   <tr>
     <td colspan="4" class="table_notes">
@@ -221,9 +230,10 @@ evaluation.
     </td>
   </tr>
   <tr>
-    <td style="text-align: left"><audio src="unseen_text/1_woman_fastspeech2.wav" controls="" preload=""></audio></td>
     <td style="text-align: left"><audio src="unseen_text/1_woman_baseline.wav" controls="" preload=""></audio></td>
+    <td style="text-align: left"><audio src="unseen_text/1_woman_phone.wav" controls="" preload=""></audio></td>
     <td style="text-align: left"><audio src="unseen_text/1_woman_word.wav" controls="" preload=""></audio></td>
+    <td style="text-align: left"><audio src="unseen_text/1_woman_fastspeech2.wav" controls="" preload=""></audio></td>
   </tr>
 
 
